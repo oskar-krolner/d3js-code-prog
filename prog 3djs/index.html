@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hvor mange har hvilket type kæledyr</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.6.1/d3.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+    <main>
+        <div>
+            <label for="kæledyrInput">Hvilket kæledyr har du?</label>
+            <input type="text" id="kæledyrInput" placeholder="Indtast kæledyrstype">
+            <button onclick="fangKæledyr()">Indsend</button>
+            <button onclick="rydGrafen()">Ryd grafen</button>
+            <button onclick="fortryd()">Fortryd</button>
+        </div>
+        <div id="chart"></div>
+    </main>
+
+    <script>
+        let dyrListe = JSON.parse(localStorage.getItem('dyrListe')) || [];
+        let valideDyr = [];
+
+        fetch('dyr.json')
+            .then(response => response.json())
+            .then(data => {
+                valideDyr = Object.values(data.dyr).flat();
+            })
+            .catch(error => console.error('Fejl ved at loade dyr.json:', error));
+
+        function updateGrafen() {
+            const counts = {};
+            dyrListe.forEach(kæledyr => {
+                counts[kæledyr] = (counts[kæledyr] || 0) + 1;
+            });
+
+            const data = Object.entries(counts).map(([key, value]) => ({ type: key, count: value }));
+
+            d3.select("#chart").selectAll("*").remove();
+            if (data.length === 0) return;
+
+            const width = 500, height = 300, margin = { top: 20, right: 30, bottom: 40, left: 40 };
+            const svg = d3.select("#chart").append("svg").attr("width", width).attr("height", height);
+
+            const x = d3.scaleBand().domain(data.map(d => d.type)).range([margin.left, width - margin.right]).padding(0.1);
+            const y = d3.scaleLinear().domain([0, d3.max(data, d => d.count)]).nice().range([height - margin.bottom, margin.top]);
+
+            svg.append("g").attr("fill", "steelblue")
+                .selectAll("rect").data(data).join("rect")
+                .attr("x", d => x(d.type)).attr("y", d => y(d.count))
+                .attr("height", d => y(0) - y(d.count)).attr("width", x.bandwidth());
+
+            svg.append("g").attr("transform", `translate(0,${height - margin.bottom})`).call(d3.axisBottom(x)).attr("font-size", '12px');
+            svg.append("g").attr("transform", `translate(${margin.left},0)`).call(d3.axisLeft(y)).attr("font-size", '12px');
+        }
+
+        function fangKæledyr() {
+            let kæledyrInput = document.getElementById("kæledyrInput").value.trim().toLowerCase();
+            kæledyrInput = kæledyrInput.charAt(0).toUpperCase() + kæledyrInput.slice(1);
+
+            if (kæledyrInput && valideDyr.includes(kæledyrInput)) {
+                dyrListe.push(kæledyrInput);
+                localStorage.setItem('dyrListe', JSON.stringify(dyrListe));
+                updateGrafen();
+                document.getElementById("kæledyrInput").value = '';
+            } else {
+                alert("Kæledyrstype er ikke gyldig. Prøv venligst igen.");
+            }
+        }
+
+        function rydGrafen() {
+            dyrListe = [];
+            localStorage.setItem('dyrListe', JSON.stringify(dyrListe));
+            updateGrafen();
+        }
+
+        function fortryd() {
+            if (dyrListe.length > 0) {
+                dyrListe.pop();
+                localStorage.setItem('dyrListe', JSON.stringify(dyrListe));
+                updateGrafen();
+            }
+        }
+
+        window.onload = updateGrafen;
+    </script>
+</body>
+</html>
