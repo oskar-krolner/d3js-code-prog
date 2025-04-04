@@ -1,0 +1,33 @@
+{
+  "dyr": {
+    "pattedyr": [
+      "Løve", "Elefant", "Delfin", "Bæver", "Giraf", "Tiger", "Næsehorn", "Isbjørn", "Panda", "Koala",
+      "Hest", "Hund", "Kat", "Ulve", "Bjørn", "Kænguru", "Egern", "Kamel", "Hjort", "Flagermus",
+      "Chimpanse", "Gorilla", "Orangutang", "Hvalros", "Sæl", "Næbdyr"
+    ],
+    "fugle": [
+      "Ørn", "Papegøje", "Pingvin", "Svale", "Flamingo", "Ugle", "Falk", "Høg", "Albatros", "Kondor",
+      "And", "Gås", "Svane", "Spurve", "Hane", "Høne", "Tukan", "Kanariefugl", "Stork", "Struds"
+    ],
+    "reptiler": [
+      "Krokodille", "Skildpadde", "Firben", "Slange", "Kamæleon", "Iguana", "Anakonda", "Komodovaran", "Gekko", "Klapperslange"
+    ],
+    "amfibier": [
+      "Frø", "Salamander", "Axolotl", "Latterfrø", "Gulbuget tudse", "Træfrø", "Tigersalamander", "Kæmpe salamander", "Pilegiftfrø", "Klofrø"
+    ],
+    "fisk": [
+      "Haj", "Laks", "Guldfisk", "Malle", "Piranha", "Torsk", "Aborre", "Sild", "Søhest", "Manta rokke",
+      "Stør", "Barracuda", "Koral fisk", "Tunfisk", "Sværdfisk"
+    ],
+    "insekter": [
+      "Sommerfugl", "Bille", "Myre", "Græshoppe", "Bie", "Edderkop", "Mariehøne", "Natsværmer", "Tæge", "Kakerlak",
+      "Guldsmed", "Brombi", "Skrubtudse", "Knæler", "Lus"
+    ],
+    "bløddyr": [
+      "Blæksprutte", "Snegl", "Musling", "Nautilus", "Blodigle", "Bluesnegl", "Kæmpeblæksprutte", "Havkonkylie", "Perlemusling", "Søsnegl"
+    ],
+    "andre dyr": [
+      "Søstjerne", "Søpindsvin", "Søagurk", "Krabbe", "Hummer", "Reje", "Krebs", "Søhest", "Vandmand", "Koraldyr"
+    ]
+  }
+}
